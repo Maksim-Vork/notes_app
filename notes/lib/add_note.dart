@@ -6,7 +6,9 @@ class Note {
 }
 
 class NotesMeneger {
-  List<Note> _notes = [];
+  final List<Note> _notes = [
+    Note(title: 'Title', description: 'Am Am'),
+  ];
 
   addNote(Note note) {
     _notes.add(note);
@@ -14,5 +16,9 @@ class NotesMeneger {
 
   removeAtNote(int index) {
     _notes.removeAt(index);
+  }
+
+  List<Note> getNotes() {
+    return _notes;
   }
 }
