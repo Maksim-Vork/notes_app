@@ -1,24 +1,23 @@
 class Note {
   final String title;
   final String description;
+  final String id;
 
-  Note({required this.title, required this.description});
+  Note({required this.title, required this.description, required this.id});
 }
 
 class NotesMeneger {
-  final List<Note> _notes = [
-    Note(title: 'Title', description: 'Am Am'),
-  ];
+  final List<Note> _notes = [];
 
-  addNote(Note note) {
-    _notes.add(note);
+  void addNote(String title, String description) {
+    final newNote = Note(
+        title: title, description: description, id: DateTime.now().toString());
+    _notes.add(newNote);
   }
 
-  removeAtNote(int index) {
-    _notes.removeAt(index);
+  void deleteNote(String id) {
+    _notes.removeWhere((note) => note.id == id);
   }
 
-  List<Note> getNotes() {
-    return _notes;
-  }
+  List<Note> get notes => _notes;
 }

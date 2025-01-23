@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 class NoteDescription extends StatefulWidget {
   final Note note;
-  const NoteDescription({super.key, required this.note});
+  final NotesMeneger notesMeneger;
+
+  const NoteDescription(
+      {super.key, required this.note, required this.notesMeneger});
 
   @override
   State<NoteDescription> createState() => _NoteDescriptionState();
@@ -31,7 +34,10 @@ class _NoteDescriptionState extends State<NoteDescription> {
             IconButton(
                 color: Colors.white,
                 iconSize: 30,
-                onPressed: () {},
+                onPressed: () {
+                  widget.notesMeneger.deleteNote(widget.note.id);
+                  Navigator.pop(context);
+                },
                 icon: Icon(Icons.delete))
           ],
         ),

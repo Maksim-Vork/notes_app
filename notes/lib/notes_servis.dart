@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:notes/add_note.dart';
 
 class NotesServis extends StatefulWidget {
-  const NotesServis({
-    super.key,
-  });
+  final NotesMeneger notesMeneger;
+  const NotesServis({super.key, required this.notesMeneger});
 
   @override
   State<NotesServis> createState() => _NotesServisState();
@@ -13,12 +12,6 @@ class NotesServis extends StatefulWidget {
 class _NotesServisState extends State<NotesServis> {
   final TextEditingController _controllerTitle = TextEditingController();
   final TextEditingController _controllerDiscription = TextEditingController();
-
-  void submit(BuildContext context) {
-    final newNote = Note(
-        title: _controllerTitle.text, description: _controllerDiscription.text);
-    Navigator.of(context).pop(newNote);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +35,9 @@ class _NotesServisState extends State<NotesServis> {
                 color: Colors.white,
                 iconSize: 30,
                 onPressed: () {
-                  submit(context);
+                  widget.notesMeneger.addNote(
+                      _controllerTitle.text, _controllerDiscription.text);
+                  Navigator.pop(context);
                 },
                 icon: Icon(Icons.check))
           ],

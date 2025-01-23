@@ -54,27 +54,8 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
-  final NotesMeneger notesMeneger = NotesMeneger();
-
-  void navigatorToNote(int index) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            NoteDescription(note: notesMeneger.getNotes()[index])));
-  }
-
-  void addNote(Note note) {
-    setState(() {
-      notesMeneger.addNote(note);
-    });
-  }
-
-  void navigatorToAddNote() async {
-    final newNote = await Navigator.of(context)
-        .push<Note>(MaterialPageRoute(builder: (context) => NotesServis()));
-    if (null != newNote) {
-      addNote(newNote);
-    }
-  }
+  final NotesMeneger notesMeneger =
+      NotesMeneger(); //экземпляр класса менеджера заметок
 
   @override
   Widget build(BuildContext context) {
@@ -113,16 +94,22 @@ class _NotesScreenState extends State<NotesScreen> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
           ),
-          //получение заметки по индексу
-          itemCount: notesMeneger.getNotes().length,
-
+          itemCount: notesMeneger.notes.length,
           itemBuilder: (context, index) {
-            final note = notesMeneger.getNotes()[index];
+            final note =
+                notesMeneger.notes[index]; //получение заметки по индексу
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
               child: GestureDetector(
                 onTap: () {
-                  navigatorToNote(index);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NoteDescription(
+                              note: note,
+                              notesMeneger: notesMeneger))).then((_) {
+                    setState(() {});
+                  });
                 },
                 child: Container(
                   height: 153,
@@ -166,7 +153,13 @@ class _NotesScreenState extends State<NotesScreen> {
         backgroundColor: Color.fromARGB(255, 255, 194, 25),
         shape: CircleBorder(),
         onPressed: () {
-          navigatorToAddNote();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      NotesServis(notesMeneger: notesMeneger))).then((_) {
+            setState(() {});
+          });
         },
         child: Icon(
           size: 30,
