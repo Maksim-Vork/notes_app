@@ -1,34 +1,38 @@
-import 'package:notes/add_note.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/add_task.dart';
 
-class NoteDescription extends StatefulWidget {
-  final Note note;
-  final NotesMeneger notesMeneger;
+class TaskDescription extends StatefulWidget {
+  final Task task;
+  final TaskManager taskManager;
 
-  const NoteDescription(
-      {super.key, required this.note, required this.notesMeneger});
+  const TaskDescription(
+      {super.key, required this.task, required this.taskManager});
 
   @override
-  State<NoteDescription> createState() => _NoteDescriptionState();
+  State<TaskDescription> createState() => _TaskDescriptionState();
 }
 
-class _NoteDescriptionState extends State<NoteDescription> {
-  late TextEditingController _titleController;
-  late TextEditingController _descriptionController;
+class _TaskDescriptionState extends State<TaskDescription> {
+  // Инициализация контроллера сразу при объявлении
+  TextEditingController _titleController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _titleController = TextEditingController(text: widget.note.title);
-    _descriptionController =
-        TextEditingController(text: widget.note.description);
+    // Установка текста контроллера на заголовок задачи
+    _titleController.text = widget.task.title;
   }
 
   @override
   void dispose() {
+    // Освобождение контроллера
     _titleController.dispose();
-    _descriptionController.dispose();
     super.dispose();
+  }
+
+  void _saveTask() {
+    // Обновление задачи перед выходом
+    widget.taskManager.updateTask(widget.task.id, _titleController.text);
   }
 
   @override
@@ -45,11 +49,7 @@ class _NoteDescriptionState extends State<NoteDescription> {
               color: Colors.white,
               iconSize: 25,
               onPressed: () {
-                widget.notesMeneger.updateNote(
-                  widget.note.id,
-                  _titleController.text,
-                  _descriptionController.text,
-                );
+                _saveTask(); // Сохраняем задачу перед выходом
                 Navigator.pop(context);
               },
               icon: Icon(Icons.arrow_back_ios),
@@ -58,7 +58,7 @@ class _NoteDescriptionState extends State<NoteDescription> {
               color: Colors.white,
               iconSize: 30,
               onPressed: () {
-                widget.notesMeneger.deleteNote(widget.note.id);
+                widget.taskManager.deleteTask(widget.task.id);
                 Navigator.pop(context);
               },
               icon: Icon(Icons.delete),
@@ -79,7 +79,7 @@ class _NoteDescriptionState extends State<NoteDescription> {
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Введите заголовок',
+                hintText: 'Введите заголовок задачи',
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             ),
@@ -92,20 +92,6 @@ class _NoteDescriptionState extends State<NoteDescription> {
             ),
             SizedBox(
               height: 15,
-            ),
-            TextField(
-              controller: _descriptionController,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w300,
-                color: Color.fromARGB(255, 255, 255, 255),
-              ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Введите описание',
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-              maxLines: null,
             ),
           ],
         ),

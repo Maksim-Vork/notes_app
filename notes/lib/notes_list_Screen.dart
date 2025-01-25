@@ -6,7 +6,6 @@ import 'package:notes/task_list_Screen.dart';
 
 class NotesListScreen extends StatefulWidget {
   const NotesListScreen({super.key});
-
   @override
   State<NotesListScreen> createState() => _NotesListScreenState();
 }
@@ -16,7 +15,6 @@ class _NotesListScreenState extends State<NotesListScreen> {
   int _currentIndex = 0;
 //список экранов
   final List<Widget> _children = [NotesScreen(), TaskScreen()];
-
 //метод для изменения индекса
   void _onTabTapped(int index) {
     setState(() {
@@ -48,7 +46,6 @@ class _NotesListScreenState extends State<NotesListScreen> {
 
 class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
-
   @override
   State<NotesScreen> createState() => _NotesScreenState();
 }
@@ -56,7 +53,6 @@ class NotesScreen extends StatefulWidget {
 class _NotesScreenState extends State<NotesScreen> {
   final NotesMeneger notesMeneger =
       NotesMeneger(); //экземпляр класса менеджера заметок
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

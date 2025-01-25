@@ -19,5 +19,16 @@ class NotesMeneger {
     _notes.removeWhere((note) => note.id == id);
   }
 
+  void updateNote(String id, String newTitle, String newDescription) {
+    final index = _notes.indexWhere((note) => note.id == id);
+    if (index != -1) {
+      _notes[index] = Note(
+        title: newTitle,
+        description: newDescription,
+        id: id,
+      );
+    }
+  }
+
   List<Note> get notes => _notes;
 }
