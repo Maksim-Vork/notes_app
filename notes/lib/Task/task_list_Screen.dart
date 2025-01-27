@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:notes/TaskDescription.dart';
-import 'package:notes/task_servis.dart';
-import 'package:notes/add_task.dart';
+import 'package:notes/Task/TaskDescription.dart';
+import 'package:notes/Task/task_servis.dart';
+import 'package:notes/Task/add_task.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});

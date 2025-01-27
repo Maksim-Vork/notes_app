@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes/add_note.dart';
+import 'package:notes/Notes/add_note.dart';
 
 class NotesServis extends StatefulWidget {
   final NotesMeneger notesMeneger;

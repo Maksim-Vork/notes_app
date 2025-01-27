@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:notes/NoteDescription.dart';
-import 'package:notes/add_note.dart';
-import 'package:notes/notes_servis.dart';
-import 'package:notes/task_list_Screen.dart';
+import 'package:notes/Notes/NoteDescription.dart';
+import 'package:notes/Notes/add_note.dart';
+import 'package:notes/Notes/notes_servis.dart';
+import 'package:notes/Task/task_list_Screen.dart';
 
 class NotesListScreen extends StatefulWidget {
   const NotesListScreen({super.key});
