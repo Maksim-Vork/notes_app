@@ -1,8 +1,9 @@
+// ignore: file_names
 import 'package:flutter_test/flutter_test.dart';
 import 'package:notes/Task/add_task.dart';
 
 void main() {
-  group('Тест такск мендежера', () {
+  group('Test TaskManager', () {
     late TaskManager taskManager;
 
     setUp(() {
