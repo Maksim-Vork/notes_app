@@ -42,7 +42,7 @@ void main() {
     final notesMeneger = NotesMeneger();
 
     // Act
-    notesMeneger.addNote('Home', 'My home big');
+    notesMeneger.addNote('Home', 'My house is big');
     final notes = notesMeneger.notes;
     expect(notes.length, 1);
 
@@ -55,7 +55,7 @@ void main() {
     // Assert
     expect(notes[0].id, idNote);
     expect(notes[0].title, 'Maxim');
-    expect(notes[0].description, 'My home big');
+    expect(notes[0].description, 'My house is big');
     expect(notes, isNotEmpty);
     expect(notes.length, 1);
   });
