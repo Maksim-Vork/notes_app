@@ -19,44 +19,43 @@ void main() {
       expect(notes.length, 1);
       expect(notes[0].id, isNotEmpty);
     });
-  });
+    test('Test delete note', () {
+      // Arrange
+      final notesMeneger = NotesMeneger();
 
-  test('Test delete note', () {
-    // Arrange
-    final notesMeneger = NotesMeneger();
+      // Act
+      notesMeneger.addNote('Hello', "I'm from Belarus");
+      final notes = notesMeneger.notes;
+      expect(notes.length, 1);
+      final idNote = notes[0].id;
+      notesMeneger.deleteNote(idNote);
 
-    // Act
-    notesMeneger.addNote('Hello', "I'm from Belarus");
-    final notes = notesMeneger.notes;
-    expect(notes.length, 1);
-    final idNote = notes[0].id;
-    notesMeneger.deleteNote(idNote);
+      // Assert
+      expect(notes.length, 0);
+      expect(notes, isEmpty);
+    });
 
-    // Assert
-    expect(notes.length, 0);
-    expect(notes, isEmpty);
-  });
+    test('Test update note', () {
+      // Arrange
+      final notesMeneger = NotesMeneger();
 
-  test('Test update note', () {
-    // Arrange
-    final notesMeneger = NotesMeneger();
+      // Act
+      notesMeneger.addNote('Home', 'My house is big');
+      final notes = notesMeneger.notes;
+      expect(notes.length, 1);
 
-    // Act
-    notesMeneger.addNote('Home', 'My house is big');
-    final notes = notesMeneger.notes;
-    expect(notes.length, 1);
+      final title = 'Maxim';
+      final description = notes[0].description;
+      final idNote = notes[0].id;
 
-    final title = 'Maxim';
-    final description = notes[0].description;
-    final idNote = notes[0].id;
+      notesMeneger.updateNote(idNote, title, description);
 
-    notesMeneger.updateNote(idNote, title, description);
-
-    // Assert
-    expect(notes[0].id, idNote);
-    expect(notes[0].title, 'Maxim');
-    expect(notes[0].description, 'My house is big');
-    expect(notes, isNotEmpty);
-    expect(notes.length, 1);
+      // Assert
+      expect(notes[0].id, idNote);
+      expect(notes[0].title, 'Maxim');
+      expect(notes[0].description, 'My house is big');
+      expect(notes, isNotEmpty);
+      expect(notes.length, 1);
+    });
   });
 }
