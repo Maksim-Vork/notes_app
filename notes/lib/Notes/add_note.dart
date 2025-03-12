@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Note {
   final String title;
   final String description;
@@ -6,17 +8,19 @@ class Note {
   Note({required this.title, required this.description, required this.id});
 }
 
-class NotesMeneger {
+class NotesMeneger with ChangeNotifier {
   final List<Note> _notes = [];
 
   void addNote(String title, String description) {
     final newNote = Note(
         title: title, description: description, id: DateTime.now().toString());
     _notes.add(newNote);
+    notifyListeners();
   }
 
   void deleteNote(String id) {
     _notes.removeWhere((note) => note.id == id);
+    notifyListeners();
   }
 
   void updateNote(String id, String newTitle, String newDescription) {
@@ -28,6 +32,7 @@ class NotesMeneger {
         id: id,
       );
     }
+    notifyListeners();
   }
 
   List<Note> get notes => _notes;

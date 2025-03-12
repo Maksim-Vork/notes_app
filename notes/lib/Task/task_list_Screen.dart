@@ -1,7 +1,9 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:notes/Task/TaskDescription.dart';
 import 'package:notes/Task/task_servis.dart';
 import 'package:notes/Task/add_task.dart';
+import 'package:provider/provider.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -11,7 +13,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  final TaskManager taskManager = TaskManager();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,59 +45,59 @@ class _TaskScreenState extends State<TaskScreen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 11, horizontal: 9),
-        child: ListView.builder(
-          itemCount: taskManager.TaskList.length,
-          itemBuilder: (BuildContext context, int index) {
-            final task = taskManager.TaskList[index];
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 6),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TaskDescription(
-                              task: task, taskManager: taskManager))).then((_) {
-                    setState(() {});
-                  });
-                },
-                child: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 87, 80, 80),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                    child: ListTile(
-                      title: Text(
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                            decoration: task.isDone
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
+          padding: EdgeInsets.symmetric(vertical: 11, horizontal: 9),
+          child: Consumer<TaskManager>(builder: (context, taskManager, child) {
+            return ListView.builder(
+              itemCount: taskManager.taskList.length,
+              itemBuilder: (BuildContext context, int index) {
+                final task = taskManager.taskList[index];
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TaskDescription(
+                                    task: task,
+                                  )));
+                    },
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 87, 80, 80),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                        child: ListTile(
+                          title: Text(
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                decoration: task.isDone
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                              ),
+                              task.title),
+                          leading: Checkbox(
+                            activeColor: Color.fromARGB(255, 255, 194, 25),
+                            checkColor: Colors.white,
+                            side: BorderSide(color: Colors.white),
+                            value: task.isDone,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                taskManager.toggleTask(index);
+                              });
+                            },
                           ),
-                          task.title),
-                      leading: Checkbox(
-                        activeColor: Color.fromARGB(255, 255, 194, 25),
-                        checkColor: Colors.white,
-                        side: BorderSide(color: Colors.white),
-                        value: task.isDone,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            taskManager.toggleTask(index);
-                          });
-                        },
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             );
-          },
-        ),
-      ),
+          })),
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         focusElevation: 0,
@@ -106,13 +107,9 @@ class _TaskScreenState extends State<TaskScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TasksServis(
-                taskMeneger: taskManager,
-              ),
+              builder: (context) => TasksServis(),
             ),
-          ).then((_) {
-            setState(() {});
-          });
+          );
         },
         child: Icon(
           size: 30,

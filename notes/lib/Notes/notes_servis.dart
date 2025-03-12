@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:notes/Notes/add_note.dart';
+import 'package:provider/provider.dart';
 
 class NotesServis extends StatefulWidget {
-  final NotesMeneger notesMeneger;
-  const NotesServis({super.key, required this.notesMeneger});
+  const NotesServis({
+    super.key,
+  });
 
   @override
   State<NotesServis> createState() => _NotesServisState();
@@ -35,8 +37,9 @@ class _NotesServisState extends State<NotesServis> {
                 color: Colors.white,
                 iconSize: 30,
                 onPressed: () {
-                  widget.notesMeneger.addNote(
+                  context.read<NotesMeneger>().addNote(
                       _controllerTitle.text, _controllerDiscription.text);
+
                   Navigator.pop(context);
                 },
                 icon: Icon(Icons.check))

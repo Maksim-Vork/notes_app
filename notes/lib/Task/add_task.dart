@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Task {
   final String title;
   bool isDone;
@@ -6,24 +8,27 @@ class Task {
   Task({required this.title, required this.id, this.isDone = false});
 }
 
-class TaskManager {
+class TaskManager with ChangeNotifier {
   final List<Task> _taskList = <Task>[];
 
-  List<Task> get TaskList => _taskList;
+  List<Task> get taskList => _taskList;
 
   void addTask(String title) {
     final newTask = Task(title: title, id: DateTime.now().toString());
     _taskList.add(newTask);
+    notifyListeners();
   }
 
   void toggleTask(int index) {
-    if (index >= 0 && index < TaskList.length) {
-      TaskList[index].isDone = !TaskList[index].isDone;
+    if (index >= 0 && index < _taskList.length) {
+      _taskList[index].isDone = !_taskList[index].isDone;
     }
+    notifyListeners();
   }
 
   void deleteTask(String id) {
     _taskList.removeWhere((task) => task.id == id);
+    notifyListeners();
   }
 
   void updateTask(String id, String newTitle) {
@@ -35,5 +40,6 @@ class TaskManager {
         isDone: _taskList[index].isDone,
       );
     }
+    notifyListeners();
   }
 }

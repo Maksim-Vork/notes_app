@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notes/Task/add_task.dart';
+import 'package:provider/provider.dart';
 
 class TasksServis extends StatefulWidget {
-  final TaskManager taskMeneger;
-  const TasksServis({super.key, required this.taskMeneger});
+  const TasksServis({super.key});
 
   @override
   State<TasksServis> createState() => _TasksServisState();
@@ -34,7 +34,7 @@ class _TasksServisState extends State<TasksServis> {
                 color: Colors.white,
                 iconSize: 30,
                 onPressed: () {
-                  widget.taskMeneger.addTask(_controllerTitle.text);
+                  context.read<TaskManager>().addTask(_controllerTitle.text);
 
                   Navigator.pop(context);
                 },

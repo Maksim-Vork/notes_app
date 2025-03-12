@@ -1,12 +1,14 @@
 import 'package:notes/Notes/add_note.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NoteDescription extends StatefulWidget {
   final Note note;
-  final NotesMeneger notesMeneger;
 
-  const NoteDescription(
-      {super.key, required this.note, required this.notesMeneger});
+  const NoteDescription({
+    super.key,
+    required this.note,
+  });
 
   @override
   State<NoteDescription> createState() => _NoteDescriptionState();
@@ -45,11 +47,9 @@ class _NoteDescriptionState extends State<NoteDescription> {
               color: Colors.white,
               iconSize: 25,
               onPressed: () {
-                widget.notesMeneger.updateNote(
-                  widget.note.id,
-                  _titleController.text,
-                  _descriptionController.text,
-                );
+                context.read<NotesMeneger>().updateNote(widget.note.id,
+                    _titleController.text, _descriptionController.text);
+
                 Navigator.pop(context);
               },
               icon: Icon(Icons.arrow_back_ios),
@@ -58,7 +58,8 @@ class _NoteDescriptionState extends State<NoteDescription> {
               color: Colors.white,
               iconSize: 30,
               onPressed: () {
-                widget.notesMeneger.deleteNote(widget.note.id);
+                context.read<NotesMeneger>().deleteNote(widget.note.id);
+
                 Navigator.pop(context);
               },
               icon: Icon(Icons.delete),

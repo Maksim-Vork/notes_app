@@ -1,38 +1,40 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:notes/Task/add_task.dart';
+import 'package:provider/provider.dart';
 
 class TaskDescription extends StatefulWidget {
   final Task task;
-  final TaskManager taskManager;
 
-  const TaskDescription(
-      {super.key, required this.task, required this.taskManager});
+  const TaskDescription({
+    super.key,
+    required this.task,
+  });
 
   @override
   State<TaskDescription> createState() => _TaskDescriptionState();
 }
 
 class _TaskDescriptionState extends State<TaskDescription> {
-  // Инициализация контроллера сразу при объявлении
-  TextEditingController _titleController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Установка текста контроллера на заголовок задачи
+
     _titleController.text = widget.task.title;
   }
 
   @override
   void dispose() {
-    // Освобождение контроллера
     _titleController.dispose();
     super.dispose();
   }
 
   void _saveTask() {
-    // Обновление задачи перед выходом
-    widget.taskManager.updateTask(widget.task.id, _titleController.text);
+    context
+        .read<TaskManager>()
+        .updateTask(widget.task.id, _titleController.text);
   }
 
   @override
@@ -49,7 +51,7 @@ class _TaskDescriptionState extends State<TaskDescription> {
               color: Colors.white,
               iconSize: 25,
               onPressed: () {
-                _saveTask(); // Сохраняем задачу перед выходом
+                _saveTask();
                 Navigator.pop(context);
               },
               icon: Icon(Icons.arrow_back_ios),
@@ -58,7 +60,8 @@ class _TaskDescriptionState extends State<TaskDescription> {
               color: Colors.white,
               iconSize: 30,
               onPressed: () {
-                widget.taskManager.deleteTask(widget.task.id);
+                context.read<TaskManager>().deleteTask(widget.task.id);
+
                 Navigator.pop(context);
               },
               icon: Icon(Icons.delete),

@@ -3,6 +3,7 @@ import 'package:notes/Notes/NoteDescription.dart';
 import 'package:notes/Notes/add_note.dart';
 import 'package:notes/Notes/notes_servis.dart';
 import 'package:notes/Task/task_list_Screen.dart';
+import 'package:provider/provider.dart';
 
 class NotesListScreen extends StatefulWidget {
   const NotesListScreen({super.key});
@@ -51,8 +52,6 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
-  final NotesMeneger notesMeneger =
-      NotesMeneger(); //экземпляр класса менеджера заметок
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,65 +83,6 @@ class _NotesScreenState extends State<NotesScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 19, horizontal: 9),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          itemCount: notesMeneger.notes.length,
-          itemBuilder: (context, index) {
-            final note =
-                notesMeneger.notes[index]; //получение заметки по индексу
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NoteDescription(
-                              note: note,
-                              notesMeneger: notesMeneger))).then((_) {
-                    setState(() {});
-                  });
-                },
-                child: Container(
-                  height: 153,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 87, 80, 80),
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17,
-                                ),
-                                note.title),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 194, 194, 194),
-                                  fontSize: 15,
-                                ),
-                                note.description)
-                          ])),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         focusElevation: 0,
@@ -150,12 +90,7 @@ class _NotesScreenState extends State<NotesScreen> {
         shape: CircleBorder(),
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      NotesServis(notesMeneger: notesMeneger))).then((_) {
-            setState(() {});
-          });
+              context, MaterialPageRoute(builder: (context) => NotesServis()));
         },
         child: Icon(
           size: 30,
@@ -163,6 +98,65 @@ class _NotesScreenState extends State<NotesScreen> {
           Icons.add,
         ),
       ),
+      body: Padding(
+          padding: EdgeInsets.symmetric(vertical: 19, horizontal: 9),
+          child:
+              Consumer<NotesMeneger>(builder: (context, notesMeneger, child) {
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: notesMeneger.notes.length,
+              itemBuilder: (context, index) {
+                final note =
+                    notesMeneger.notes[index]; //получение заметки по индексу
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NoteDescription(
+                                    note: note,
+                                  )));
+                    },
+                    child: Container(
+                      height: 153,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 87, 80, 80),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 16),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17,
+                                    ),
+                                    note.title),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                    maxLines: 3,
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 194, 194, 194),
+                                      fontSize: 15,
+                                    ),
+                                    note.description)
+                              ])),
+                    ),
+                  ),
+                );
+              },
+            );
+          })),
     );
   }
 }
