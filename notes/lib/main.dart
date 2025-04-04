@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:notes/Notes/add_note.dart';
-import 'package:notes/Task/add_task.dart';
-
-import 'package:notes/home_notes_list_Screen.dart';
-import 'package:provider/provider.dart';
+import 'package:notes/feauters/notes/presentation/pages/view_notes/view_notes_page.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => NotesMeneger()),
-        ChangeNotifierProvider(create: (context) => TaskManager()),
-      ],
-      child: DevicePreview(
-        enabled: true,
-        builder: (context) => const MyApp(),
-      ),
+    DevicePreview(
+      enabled: true,
+      builder: (context) => const MyApp(),
     ),
   );
 }
@@ -32,7 +22,7 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      home: const NotesListScreen(),
+      home: NotesPageView(),
     );
   }
 }
