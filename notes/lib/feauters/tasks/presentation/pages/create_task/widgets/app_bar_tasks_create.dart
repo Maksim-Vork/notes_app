@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/tasks/domain/entity/task.dart';
 import 'package:notes/feauters/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:notes/feauters/tasks/presentation/bloc/tasks_event.dart';
@@ -24,7 +25,7 @@ class AppBarTasksCreate extends StatelessWidget {
             icon: Icon(
               Icons.arrow_back_ios,
               size: 35,
-              color: Color.fromARGB(255, 194, 194, 194),
+              color: AppColors.descriptionColor,
             )),
         IconButton(
             onPressed: () {
@@ -40,7 +41,7 @@ class AppBarTasksCreate extends StatelessWidget {
             icon: Icon(
               Icons.check,
               size: 35,
-              color: Color.fromARGB(255, 194, 194, 194),
+              color: AppColors.descriptionColor,
             )),
       ],
     );

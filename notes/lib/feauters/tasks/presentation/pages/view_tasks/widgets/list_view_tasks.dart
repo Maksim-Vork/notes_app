@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/tasks/domain/entity/task.dart';
 import 'package:notes/feauters/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:notes/feauters/tasks/presentation/bloc/tasks_event.dart';
@@ -45,7 +46,7 @@ class _TaskViewState extends State<TaskView> {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 87, 80, 80),
+          color: AppColors.surfaceColor,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -55,7 +56,7 @@ class _TaskViewState extends State<TaskView> {
               Row(
                 children: [
                   Checkbox(
-                    activeColor: Colors.amber,
+                    activeColor: AppColors.floatingActionButtonColor,
                     value: widget.task.flag,
                     onChanged: (bool? newValue) {
                       BlocProvider.of<TasksBloc>(context)

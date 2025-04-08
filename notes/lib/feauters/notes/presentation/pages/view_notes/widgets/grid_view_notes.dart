@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/notes/domain/entity/note.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_state.dart';
 import 'package:notes/feauters/notes/presentation/pages/view_note/view_note_page.dart';
@@ -52,7 +53,7 @@ class NoteContainer extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 87, 80, 80),
+          color: AppColors.surfaceColor,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
@@ -73,7 +74,7 @@ class NoteContainer extends StatelessWidget {
               Text(
                 maxLines: 3,
                 note.description,
-                style: TextStyle(color: Color.fromARGB(255, 194, 194, 194)),
+                style: TextStyle(color: AppColors.descriptionColor),
               )
             ],
           ),

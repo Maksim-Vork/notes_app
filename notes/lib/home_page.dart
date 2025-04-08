@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/notes/presentation/pages/view_notes/view_notes_page.dart';
 import 'package:notes/feauters/tasks/presentation/pages/view_tasks/view_tasks_page.dart';
 
@@ -28,10 +29,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 53, 48, 48),
+        backgroundColor: AppColors.appBarAndBottomColor,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: AppColors.descriptionColor,
         type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,
         items: const [

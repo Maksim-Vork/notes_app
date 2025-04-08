@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 
 class AppBarNotesView extends StatelessWidget {
   const AppBarNotesView({super.key});
@@ -13,7 +14,7 @@ class AppBarNotesView extends StatelessWidget {
             icon: Icon(
               Icons.create_new_folder,
               size: 35,
-              color: Color.fromARGB(255, 194, 194, 194),
+              color: AppColors.descriptionColor,
             )),
         Text(
           'Заметки',
@@ -24,7 +25,7 @@ class AppBarNotesView extends StatelessWidget {
             icon: Icon(
               Icons.settings,
               size: 35,
-              color: Color.fromARGB(255, 194, 194, 194),
+              color: AppColors.descriptionColor,
             )),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 
 class TitleFieldCreated extends StatelessWidget {
   final TextEditingController titleController;
@@ -9,9 +10,7 @@ class TitleFieldCreated extends StatelessWidget {
     return TextField(
       maxLines: null,
       style: TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
-          fontSize: 25,
-          fontWeight: FontWeight.w500),
+          color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
         border: InputBorder.none,
         enabledBorder: InputBorder.none,
@@ -19,7 +18,7 @@ class TitleFieldCreated extends StatelessWidget {
         disabledBorder: InputBorder.none,
         hintText: 'Заголовок',
         hintStyle: TextStyle(
-            color: Color.fromARGB(255, 171, 168, 168),
+            color: AppColors.searchColor,
             fontSize: 25,
             fontWeight: FontWeight.w500),
       ),

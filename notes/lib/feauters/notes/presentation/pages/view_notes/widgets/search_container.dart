@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 
 class SearchContainer extends StatelessWidget {
   final TextEditingController findController;
@@ -10,7 +11,7 @@ class SearchContainer extends StatelessWidget {
       width: double.infinity,
       height: 50,
       decoration: BoxDecoration(
-          color: Color.fromARGB(255, 87, 80, 80),
+          color: AppColors.surfaceColor,
           borderRadius: BorderRadius.circular(30)),
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -22,7 +23,7 @@ class SearchContainer extends StatelessWidget {
                 icon: Icon(
                   Icons.search,
                   size: 24,
-                  color: Color.fromARGB(255, 194, 194, 194),
+                  color: AppColors.searchColor,
                 ),
               ),
               SizedBox(
@@ -42,7 +43,7 @@ class SearchContainer extends StatelessWidget {
                     disabledBorder: InputBorder.none,
                     hintText: 'Поиск заметок',
                     hintStyle: TextStyle(
-                      color: Color.fromARGB(255, 171, 168, 168),
+                      color: AppColors.searchColor,
                       fontSize: 18,
                     ),
                   ),

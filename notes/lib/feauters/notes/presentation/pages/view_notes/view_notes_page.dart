@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_bloc.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_state.dart';
 import 'package:notes/feauters/notes/presentation/pages/create_notes/create_notes_page.dart';
@@ -14,7 +15,7 @@ class NotesPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 61, 56, 56),
+      backgroundColor: AppColors.backGroundColor,
       floatingActionButton: SizedBox(
         width: 65,
         height: 65,
@@ -22,7 +23,7 @@ class NotesPageView extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          backgroundColor: const Color.fromARGB(255, 255, 194, 25),
+          backgroundColor: AppColors.floatingActionButtonColor,
           onPressed: () {
             Navigator.push(
                 context,
@@ -39,7 +40,7 @@ class NotesPageView extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 53, 48, 48),
+          backgroundColor: AppColors.appBarAndBottomColor,
           title: AppBarNotesView()),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 17),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/notes/presentation/pages/create_notes/widgets/app_bar.dart';
 
 import 'package:notes/feauters/notes/presentation/pages/create_notes/widgets/description_field.dart';
@@ -16,10 +17,10 @@ class CreateNotesPage extends StatelessWidget {
     String formattedDate =
         DateFormat('d MMMM, HH:mm', 'ru_RU').format(currentTime);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 61, 56, 56),
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 53, 48, 48),
+        backgroundColor: AppColors.appBarAndBottomColor,
         title: AppBarNotesCreate(
           titleController: _titleController,
           descriptionController: _descriptionController,
@@ -40,8 +41,7 @@ class CreateNotesPage extends StatelessWidget {
               ),
               Text(
                 formattedDate,
-                style: TextStyle(
-                    color: Color.fromARGB(255, 171, 168, 168), fontSize: 15),
+                style: TextStyle(color: AppColors.searchColor, fontSize: 15),
               ),
               SizedBox(
                 height: 5,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/notes/domain/entity/note.dart';
 
 import 'package:notes/feauters/notes/presentation/pages/view_note/widgets/app_bar_note_view.dart';
@@ -25,10 +26,10 @@ class ViewNotePage extends StatelessWidget {
     String formattedDate =
         DateFormat('d MMMM, HH:mm', 'ru_RU').format(dataCreated);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 61, 56, 56),
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 53, 48, 48),
+        backgroundColor: AppColors.appBarAndBottomColor,
         title: AppBarNoteView(
           note: note,
           titleController: _titleController,
@@ -49,8 +50,7 @@ class ViewNotePage extends StatelessWidget {
               ),
               Text(
                 formattedDate,
-                style: TextStyle(
-                    color: Color.fromARGB(255, 171, 168, 168), fontSize: 15),
+                style: TextStyle(color: AppColors.searchColor, fontSize: 15),
               ),
               SizedBox(
                 height: 5,

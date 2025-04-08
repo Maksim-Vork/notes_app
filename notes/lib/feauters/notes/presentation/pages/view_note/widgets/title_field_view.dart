@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 
 class TitleFieldView extends StatelessWidget {
   final TextEditingController titleControllerView;
@@ -19,7 +20,7 @@ class TitleFieldView extends StatelessWidget {
         disabledBorder: InputBorder.none,
         hintText: 'Заголовок',
         hintStyle: TextStyle(
-            color: Color.fromARGB(255, 171, 168, 168),
+            color: AppColors.titileFieldView,
             fontSize: 25,
             fontWeight: FontWeight.w500),
       ),

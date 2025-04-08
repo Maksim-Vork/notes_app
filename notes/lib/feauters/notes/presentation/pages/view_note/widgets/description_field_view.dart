@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 
 class DescriptionFieldView extends StatelessWidget {
   final TextEditingController descriptionControllerView;
@@ -10,9 +11,7 @@ class DescriptionFieldView extends StatelessWidget {
     return TextField(
       maxLines: null,
       style: TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
-          fontSize: 18,
-          fontWeight: FontWeight.w300),
+          color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
       decoration: InputDecoration(
         border: InputBorder.none,
         enabledBorder: InputBorder.none,
@@ -20,7 +19,7 @@ class DescriptionFieldView extends StatelessWidget {
         disabledBorder: InputBorder.none,
         hintText: 'Начните ввод',
         hintStyle: TextStyle(
-            color: Color.fromARGB(255, 120, 120, 120),
+            color: AppColors.descriptionColor,
             fontSize: 18,
             fontWeight: FontWeight.w300),
       ),

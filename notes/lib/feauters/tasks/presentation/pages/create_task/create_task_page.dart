@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/core/theme/app_colors.dart';
 
 import 'package:notes/feauters/tasks/presentation/pages/create_task/widgets/app_bar_tasks_create.dart';
 import 'package:notes/feauters/tasks/presentation/pages/create_task/widgets/text_field_created.dart';
@@ -12,10 +13,10 @@ class CreateTaskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 61, 56, 56),
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 53, 48, 48),
+        backgroundColor: AppColors.appBarAndBottomColor,
         title: AppBarTasksCreate(
           textController: _textController,
         ),

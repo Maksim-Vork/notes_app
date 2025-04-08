@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/notes/domain/entity/note.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_bloc.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_event.dart';
@@ -35,7 +36,7 @@ class AppBarNoteView extends StatelessWidget {
             icon: Icon(
               Icons.arrow_back_ios,
               size: 35,
-              color: Color.fromARGB(255, 194, 194, 194),
+              color: AppColors.descriptionColor,
             )),
         IconButton(
             onPressed: () {
@@ -45,7 +46,7 @@ class AppBarNoteView extends StatelessWidget {
             icon: Icon(
               Icons.delete,
               size: 35,
-              color: Color.fromARGB(255, 194, 194, 194),
+              color: AppColors.descriptionColor,
             )),
       ],
     );
