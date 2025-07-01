@@ -24,7 +24,7 @@ class ViewNotePage extends StatelessWidget {
     _descriptionController = TextEditingController(text: note.description);
     final DateTime dataCreated = note.timeCreated;
     String formattedDate =
-        DateFormat('d MMMM, HH:mm', 'ru_RU').format(dataCreated);
+        "${dataCreated.day}.${dataCreated.month}.${dataCreated.year}";
     return Scaffold(
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(

@@ -4,7 +4,6 @@ import 'package:notes/feauters/notes/presentation/pages/create_notes/widgets/app
 
 import 'package:notes/feauters/notes/presentation/pages/create_notes/widgets/description_field.dart';
 import 'package:notes/feauters/notes/presentation/pages/create_notes/widgets/title_field.dart';
-import 'package:intl/intl.dart';
 
 class CreateNotesPage extends StatelessWidget {
   final DateTime currentTime;
@@ -15,7 +14,7 @@ class CreateNotesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String formattedDate =
-        DateFormat('d MMMM, HH:mm', 'ru_RU').format(currentTime);
+        "${currentTime.day}.${currentTime.month}.${currentTime.year}";
     return Scaffold(
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
