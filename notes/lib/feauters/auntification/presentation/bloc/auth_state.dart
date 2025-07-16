@@ -6,8 +6,8 @@ class LoadingAuthState extends AuthState {}
 
 class SuccefulAuthState extends AuthState {}
 
-class ErroAuthState extends AuthState {
+class ErrorAuthState extends AuthState {
   final String error;
 
-  ErroAuthState({required this.error});
+  ErrorAuthState({required this.error});
 }

@@ -13,3 +13,7 @@ class RegisterAuthEvent extends AuthEvent {
 
   RegisterAuthEvent({required this.email, required this.password});
 }
+
+class SignOutAuthEvent extends AuthEvent {}
+
+class CheckAuthEvent extends AuthEvent {}

@@ -14,4 +14,15 @@ class ImplAuthRepository implements AuthRepository {
   Future<void> register(email, password) async {
     await remoteAuthDataSource.register(email, password);
   }
+
+  @override
+  Future<bool> checkAuth() async {
+    final bool auntification = await remoteAuthDataSource.checkAuth();
+    return auntification;
+  }
+
+  @override
+  Future<void> signOut() async {
+    await remoteAuthDataSource.signOut();
+  }
 }

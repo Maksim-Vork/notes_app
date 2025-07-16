@@ -17,7 +17,6 @@ class NoteModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'title': title,
       'description': description,
       'timeCreated': timeCreated.toIso8601String(),
