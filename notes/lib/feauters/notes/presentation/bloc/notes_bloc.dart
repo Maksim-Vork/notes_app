@@ -1,53 +1,64 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes/feauters/notes/domain/entity/note.dart';
+import 'package:notes/feauters/notes/domain/usecase/add_note_usecase.dart';
+import 'package:notes/feauters/notes/domain/usecase/delete_note_usecase.dart';
 import 'package:notes/feauters/notes/domain/usecase/get_notes_usecase.dart';
-import 'package:notes/feauters/notes/domain/usecase/save_note_usecase.dart';
+import 'package:notes/feauters/notes/domain/usecase/update_note_usecase.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_event.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_state.dart';
 
 class NotesBloc extends Bloc<NotesEvent, NotesState> {
-  final GetNotesUsecase getNotes;
-  final SaveNoteUsecase saveNote;
-  NotesBloc(this.getNotes, this.saveNote) : super(NotesState([])) {
-    _loadNotes();
-    on<NoteAdd>(_onAdd);
-    on<NoteDelete>(_onDelete);
-    on<NoteUpdate>(_onUpdated);
-  }
-  void _onAdd(NoteAdd event, Emitter<NotesState> emit) {
-    final List<Note> updatedList = List<Note>.from(state.noteList)
-      ..add(event.note);
-    emit(NotesState(updatedList));
-  }
+  final AddNoteUsecase addNoteUsecase;
+  final DeleteNoteUsecase deleteNoteUsecase;
+  final GetNotesUsecase getNotesUsecase;
+  final UpdateNoteUsecase updateNoteUsecase;
 
-  void _onDelete(NoteDelete event, Emitter<NotesState> emit) {
-    final List<Note> updateList = List<Note>.from(state.noteList)
-      ..removeWhere((note) => event.id == note.id);
-
-    saveNote(updateList);
-    emit(NotesState(updateList));
+  NotesBloc(this.addNoteUsecase, this.deleteNoteUsecase, this.getNotesUsecase,
+      this.updateNoteUsecase)
+      : super(InitialNotesState()) {
+    on<GetNotesEvent>(_onGetNotes);
+    on<NoteAddEvent>(_onAdd);
+    on<NoteDeleteEvent>(_onDelete);
+    on<NoteUpdateEvent>(_onUpdate);
   }
 
-  void _onUpdated(NoteUpdate event, Emitter<NotesState> emit) {
-    final updatedList = state.noteList.map((note) {
-      if (note.id == event.note.id) {
-        return Note(
-          id: note.id,
-          title: event.note.title,
-          description: event.note.description,
-          timeCreated: note.timeCreated,
-        );
-      }
-      return note;
-    }).toList();
-
-    saveNote(updatedList);
-    emit(NotesState(updatedList));
+  void _onGetNotes(GetNotesEvent event, Emitter<NotesState> emit) async {
+    emit(LoadingNotesState());
+    try {
+      final List<Note> notes = await getNotesUsecase();
+      emit(LoadedNotesState(notes: notes));
+    } catch (e) {
+      emit(ErrorNotesState(error: e.toString()));
+    }
   }
 
-  void _loadNotes() async {
-    final loadedNotes = await getNotes();
-    // ignore: invalid_use_of_visible_for_testing_member
-    emit(NotesState(loadedNotes));
+  void _onAdd(NoteAddEvent event, Emitter<NotesState> emit) async {
+    try {
+      await addNoteUsecase(event.note);
+      final List<Note> notes = await getNotesUsecase();
+      emit(LoadedNotesState(notes: notes));
+    } catch (e) {
+      emit(ErrorNotesState(error: e.toString()));
+    }
+  }
+
+  void _onDelete(NoteDeleteEvent event, Emitter<NotesState> emit) async {
+    try {
+      await deleteNoteUsecase(event.id);
+      final List<Note> notes = await getNotesUsecase();
+      emit(LoadedNotesState(notes: notes));
+    } catch (e) {
+      emit(ErrorNotesState(error: e.toString()));
+    }
+  }
+
+  void _onUpdate(NoteUpdateEvent event, Emitter<NotesState> emit) async {
+    try {
+      await updateNoteUsecase(event.note);
+      final List<Note> notes = await getNotesUsecase();
+      emit(LoadedNotesState(notes: notes));
+    } catch (e) {
+      emit(ErrorNotesState(error: e.toString()));
+    }
   }
 }

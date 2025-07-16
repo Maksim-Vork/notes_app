@@ -2,15 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes/core/theme/app_colors.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_bloc.dart';
+import 'package:notes/feauters/notes/presentation/bloc/notes_event.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_state.dart';
 import 'package:notes/feauters/notes/presentation/pages/create_notes/create_notes_page.dart';
 import 'package:notes/feauters/notes/presentation/pages/view_notes/widgets/grid_view_notes.dart';
 import 'package:notes/feauters/notes/presentation/pages/view_notes/widgets/app_bar.dart';
 import 'package:notes/feauters/notes/presentation/pages/view_notes/widgets/search_container.dart';
 
-class NotesPageView extends StatelessWidget {
-  NotesPageView({super.key});
+class NotesPageView extends StatefulWidget {
+  const NotesPageView({super.key});
+
+  @override
+  State<NotesPageView> createState() => _NotesPageViewState();
+}
+
+class _NotesPageViewState extends State<NotesPageView> {
   final TextEditingController _findController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<NotesBloc>(context).add(GetNotesEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +65,7 @@ class NotesPageView extends StatelessWidget {
             SizedBox(height: 25),
             BlocBuilder<NotesBloc, NotesState>(
               builder: (context, state) {
-                return GridViewNotes(state: state);
+                return GridViewNotes(notesState: state);
               },
             ),
           ],

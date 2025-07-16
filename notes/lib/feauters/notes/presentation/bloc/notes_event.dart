@@ -2,20 +2,22 @@ import 'package:notes/feauters/notes/domain/entity/note.dart';
 
 abstract class NotesEvent {}
 
-class NoteAdd extends NotesEvent {
+class GetNotesEvent extends NotesEvent {}
+
+class NoteAddEvent extends NotesEvent {
   final Note note;
 
-  NoteAdd(this.note);
+  NoteAddEvent(this.note);
 }
 
-class NoteDelete extends NotesEvent {
+class NoteDeleteEvent extends NotesEvent {
   final String id;
 
-  NoteDelete(this.id);
+  NoteDeleteEvent(this.id);
 }
 
-class NoteUpdate extends NotesEvent {
+class NoteUpdateEvent extends NotesEvent {
   final Note note;
 
-  NoteUpdate(this.note);
+  NoteUpdateEvent(this.note);
 }

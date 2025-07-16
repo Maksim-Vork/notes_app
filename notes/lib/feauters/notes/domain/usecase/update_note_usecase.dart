@@ -1,12 +1,12 @@
 import 'package:notes/feauters/notes/domain/entity/note.dart';
 import 'package:notes/feauters/notes/domain/repository/notes_repository.dart';
 
-class SaveNoteUsecase {
+class UpdateNoteUsecase {
   final NotesRepository repository;
 
-  SaveNoteUsecase(this.repository);
+  UpdateNoteUsecase({required this.repository});
 
-  Future<void> call(List<Note> notes) async {
-    repository.saveNotes(notes);
+  Future<void> call(Note note) async {
+    await repository.updateNote(note.id, note);
   }
 }

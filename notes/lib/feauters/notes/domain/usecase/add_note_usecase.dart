@@ -1,12 +1,12 @@
 import 'package:notes/feauters/notes/domain/entity/note.dart';
 import 'package:notes/feauters/notes/domain/repository/notes_repository.dart';
 
-class GetNotesUsecase {
+class AddNoteUsecase {
   final NotesRepository repository;
 
-  GetNotesUsecase({required this.repository});
+  AddNoteUsecase({required this.repository});
 
-  Future<List<Note>> call() async {
-    return await repository.getNotes();
+  Future<void> call(Note note) async {
+    await repository.addNote(note);
   }
 }

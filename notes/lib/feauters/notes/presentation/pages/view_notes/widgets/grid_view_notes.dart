@@ -5,28 +5,43 @@ import 'package:notes/feauters/notes/presentation/bloc/notes_state.dart';
 import 'package:notes/feauters/notes/presentation/pages/view_note/view_note_page.dart';
 
 class GridViewNotes extends StatelessWidget {
-  final NotesState state;
-  const GridViewNotes({super.key, required this.state});
+  final NotesState notesState;
+  const GridViewNotes({super.key, required this.notesState});
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 13,
-        mainAxisSpacing: 13,
-        childAspectRatio: 1,
-      ),
-      itemCount: state.noteList.length,
-      itemBuilder: (context, index) {
-        return NoteContainer(
-          state: state,
-          note: state.noteList[index],
-        );
-      },
-    );
+    if (notesState is InitialNotesState || notesState is LoadingNotesState) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (notesState is LoadedNotesState) {
+      final loadedState = notesState as LoadedNotesState;
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 13,
+          mainAxisSpacing: 13,
+          childAspectRatio: 1,
+        ),
+        itemCount: loadedState.notes.length,
+        itemBuilder: (context, index) {
+          return NoteContainer(
+            state: notesState,
+            note: loadedState.notes[index],
+          );
+        },
+      );
+    } else if (notesState is ErrorNotesState) {
+      return Center(
+        child: Text((notesState as ErrorNotesState).error),
+      );
+    } else {
+      return Center(
+        child: Text('Ошибка приложения'),
+      );
+    }
   }
 }
 

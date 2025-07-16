@@ -30,7 +30,8 @@ class AppBarNoteView extends StatelessWidget {
                 timeCreated: DateTime.now(),
               );
 
-              BlocProvider.of<NotesBloc>(context).add(NoteUpdate(updatedNote));
+              BlocProvider.of<NotesBloc>(context)
+                  .add(NoteUpdateEvent(updatedNote));
               Navigator.pop(context);
             },
             icon: Icon(
@@ -40,7 +41,7 @@ class AppBarNoteView extends StatelessWidget {
             )),
         IconButton(
             onPressed: () {
-              BlocProvider.of<NotesBloc>(context).add(NoteDelete(note.id));
+              BlocProvider.of<NotesBloc>(context).add(NoteDeleteEvent(note.id));
               Navigator.pop(context);
             },
             icon: Icon(

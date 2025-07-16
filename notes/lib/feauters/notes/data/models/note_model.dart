@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
 var uuid = Uuid();
@@ -15,20 +16,20 @@ class NoteModel {
     required this.timeCreated,
   }) : id = id ?? uuid.v4();
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'title': title,
       'description': description,
-      'timeCreated': timeCreated.toIso8601String(),
+      'timeCreated': Timestamp.fromDate(timeCreated),
     };
   }
 
-  factory NoteModel.fromJson(Map<String, dynamic> json) {
+  factory NoteModel.fromMap(Map<String, dynamic> map, String documentId) {
     return NoteModel(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      timeCreated: DateTime.parse(json['timeCreated']),
+      id: documentId,
+      title: map['title'],
+      description: map['description'],
+      timeCreated: (map['timeCreated'] as Timestamp).toDate(),
     );
   }
 }

@@ -38,7 +38,7 @@ class AppBarNotesCreate extends StatelessWidget {
 
               if (title.isNotEmpty) {
                 BlocProvider.of<NotesBloc>(context).add(
-                  NoteAdd(
+                  NoteAddEvent(
                     Note(
                       title: title,
                       description: description,

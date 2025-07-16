@@ -10,9 +10,12 @@ import 'package:notes/feauters/auntification/domain/usecase/sign_out_usecase.dar
 import 'package:notes/feauters/auntification/presentation/bloc/auth_bloc.dart';
 import 'package:notes/feauters/auntification/presentation/screen/login_screen.dart';
 import 'package:notes/feauters/notes/data/repository/notes_repository_impl.dart';
-import 'package:notes/feauters/notes/data/sources/local_data_sources.dart';
+import 'package:notes/feauters/notes/data/sources/remote_data_sources.dart';
+import 'package:notes/feauters/notes/domain/repository/notes_repository.dart';
+import 'package:notes/feauters/notes/domain/usecase/add_note_usecase.dart';
+import 'package:notes/feauters/notes/domain/usecase/delete_note_usecase.dart';
 import 'package:notes/feauters/notes/domain/usecase/get_notes_usecase.dart';
-import 'package:notes/feauters/notes/domain/usecase/save_note_usecase.dart';
+import 'package:notes/feauters/notes/domain/usecase/update_note_usecase.dart';
 import 'package:notes/feauters/notes/presentation/bloc/notes_bloc.dart';
 import 'package:notes/feauters/tasks/data/repository/task_repository_impl.dart';
 import 'package:notes/feauters/tasks/data/sources/local_data_cources.dart';
@@ -26,10 +29,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final sourcesNotes = LocalDataSources();
-  final repositoryNotes = NotesRepositoryImpl(sourcesNotes);
-  final saveNote = SaveNoteUsecase(repositoryNotes);
-  final getNotes = GetNotesUsecase(repositoryNotes);
 
   final sourcesTasks = LocalDataCources();
   final repositoryTasks = TaskRepositoryImpl(sourcesTasks);
@@ -48,17 +47,31 @@ void main() async {
   final signOutUsecase =
       SignOutUsecase(auntificationRepository: auntificationRepository);
 
+  final RemoteDataSources remoteAuthDatasource = RemoteDataSources();
+  final NotesRepository notesRepository =
+      NotesRepositoryImpl(remoteAuthDatasource);
+  final AddNoteUsecase addNoteUsecase =
+      AddNoteUsecase(repository: notesRepository);
+  final DeleteNoteUsecase deleteNoteUsecase =
+      DeleteNoteUsecase(repository: notesRepository);
+  final GetNotesUsecase getNotesUsecase =
+      GetNotesUsecase(repository: notesRepository);
+  final UpdateNoteUsecase updateNoteUsecase =
+      UpdateNoteUsecase(repository: notesRepository);
+
   runApp(
     SafeArea(
       child: MyApp(
-        saveNote: saveNote,
-        getNotes: getNotes,
         getTasks: getTasks,
         saveTask: saveTask,
         loginUsecase: loginUsecase,
         registerUsecase: registerUsecase,
         checkAuthUsecase: checkAuthUsecase,
         signOutUsecase: signOutUsecase,
+        addNoteUsecase: addNoteUsecase,
+        deleteNoteUsecase: deleteNoteUsecase,
+        getNotesUsecase: getNotesUsecase,
+        updateNoteUsecase: updateNoteUsecase,
       ),
     ),
   );
@@ -69,21 +82,27 @@ class MyApp extends StatelessWidget {
   final RegisterUsecase registerUsecase;
   final CheckAuthUsecase checkAuthUsecase;
   final SignOutUsecase signOutUsecase;
-  final SaveNoteUsecase saveNote;
-  final GetNotesUsecase getNotes;
+
   final GetTasksUsecase getTasks;
   final SaveTaskUsecase saveTask;
 
+  final AddNoteUsecase addNoteUsecase;
+  final DeleteNoteUsecase deleteNoteUsecase;
+  final GetNotesUsecase getNotesUsecase;
+  final UpdateNoteUsecase updateNoteUsecase;
+
   const MyApp({
     super.key,
-    required this.saveNote,
-    required this.getNotes,
     required this.getTasks,
     required this.saveTask,
     required this.loginUsecase,
     required this.registerUsecase,
     required this.checkAuthUsecase,
     required this.signOutUsecase,
+    required this.addNoteUsecase,
+    required this.deleteNoteUsecase,
+    required this.getNotesUsecase,
+    required this.updateNoteUsecase,
   });
 
   @override
@@ -94,7 +113,8 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthBloc(loginUsecase, registerUsecase,
                 checkAuthUsecase, signOutUsecase)),
         BlocProvider<NotesBloc>(
-          create: (context) => NotesBloc(getNotes, saveNote),
+          create: (context) => NotesBloc(addNoteUsecase, deleteNoteUsecase,
+              getNotesUsecase, updateNoteUsecase),
         ),
         BlocProvider<TasksBloc>(
           create: (context) => TasksBloc(getTasks, saveTask),
